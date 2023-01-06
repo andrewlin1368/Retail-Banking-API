@@ -6,6 +6,10 @@
 
 <h1>ShowCustomer</h1>
 
+@if (TempData["Response"] != null)
+{
+    <p>@TempData["Response"]</p>
+}
 
 @Model.CustomerID
 @Model.SSNID
@@ -13,4 +17,3 @@
 @Model.Age
 @Model.Address
 @Model.Email
-

@@ -1,0 +1,21 @@
+﻿@model Customer
+@{
+    ViewData["Title"] = "DeleteCustomer";
+}
+
+<h1>DeleteCustomer</h1>
+
+
+<form asp-action="DeleteCustomer">
+    <h4>Are you sure you want to delete customer?</h4>
+    <hr />
+    @Html.HiddenFor(x => x.CustomerID)
+    @Html.HiddenFor(x => x.SSNID)
+    @Html.HiddenFor(x => x.Name)
+    @Html.HiddenFor(x => x.Age)
+    @Html.HiddenFor(x => x.Address)
+    @Html.HiddenFor(x => x.Status)
+    @Html.HiddenFor(x => x.Email)
+    <button type="submit" class="btn btn-danger">Yes</button>
+    <a href="javascript:history.back()" class="btn btn-primary" role="button">Cancel</a>
+</form>

@@ -7,6 +7,11 @@
 
 <h1>GetAllCustomers</h1>
 
+@if (TempData["Response"] != null)
+{
+    <p>@TempData["Response"]</p>
+}
+
 @if(Model != default){
     @foreach (Customer customer in Model)
     {
@@ -17,6 +22,8 @@
             @customer.Age
             @customer.Address
             @customer.Email
+            @Html.ActionLink("Delete","DeleteCustomer","Customer",new {CustomerID = customer.CustomerID})
+            @Html.ActionLink("Update","UpdateCustomer","Customer",new {CustomerID = customer.CustomerID})
         }
     }
                                     

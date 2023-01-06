@@ -17,11 +17,19 @@ namespace Retail_Banking_API.Models
             var response = client.PostAsJsonAsync("api/AddCustomerWihoutAuthorization", customer);
             var result = response.Result;
             StreamReader reader = new(result.Content.ReadAsStreamAsync().Result);
-            if (result.IsSuccessStatusCode)
+            return result.IsSuccessStatusCode ? (customer, "") : (default, reader.ReadToEnd());
+        }
+
+        public string DeleteCustomer(int CustomerID)
+        {
+            HttpClient client = new()
             {
-                return (customer,"");
-            }
-            return (default, reader.ReadToEnd());
+                BaseAddress = new Uri("http://my.retailbanking.com/api/")
+            };
+            var response = client.DeleteAsync($"api/DeleteWithoutAuthorization/{CustomerID}");
+            var result = response.Result;
+            StreamReader reader = new(result.Content.ReadAsStreamAsync().Result);
+            return result.IsSuccessStatusCode ? "" : reader.ReadToEnd();
         }
 
         public (List<Customer>?,string) GetAllCustomers()
@@ -65,6 +73,23 @@ namespace Retail_Banking_API.Models
                 BaseAddress = new Uri("http://my.retailbanking.com/api/")
             };
             var response = client.GetAsync($"api/getcustomerbyssn/{ssnid}");
+            var result = response.Result;
+            StreamReader reader = new(result.Content.ReadAsStreamAsync().Result);
+            if (result.IsSuccessStatusCode)
+            {
+                var data = result.Content.ReadAsAsync<Customer>();
+                return (data.Result, "");
+            }
+            return (default, reader.ReadToEnd());
+        }
+
+        public (Customer?, string) UpdateCustomer(Customer customer)
+        {
+            HttpClient client = new()
+            {
+                BaseAddress = new Uri("http://my.retailbanking.com/api/")
+            };
+            var response = client.PutAsJsonAsync($"api/UpdateWithoutAuthorization", customer);
             var result = response.Result;
             StreamReader reader = new(result.Content.ReadAsStreamAsync().Result);
             if (result.IsSuccessStatusCode)

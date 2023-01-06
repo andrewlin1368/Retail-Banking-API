@@ -6,5 +6,7 @@
         public (Customer?,string) GetCustomer(int cid);
         public (Customer?, string) GetCustomerBySSN(int ssnid);
         public (Customer?,string) AddCustomer(Customer customer);
+        public string DeleteCustomer(int CustomerID);
+        public (Customer?, string) UpdateCustomer(Customer customer);
     }
 }
