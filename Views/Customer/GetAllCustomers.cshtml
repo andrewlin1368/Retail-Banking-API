@@ -1,0 +1,26 @@
+﻿@using Retail_Banking_API.Models;
+@model IEnumerable<Customer>
+
+@{
+    ViewData["Title"] = "GetAllCustomers";
+}
+
+<h1>GetAllCustomers</h1>
+
+@if(Model != default){
+    @foreach (Customer customer in Model)
+    {
+        {
+            @customer.CustomerID
+            @customer.SSNID
+            @customer.Name
+            @customer.Age
+            @customer.Address
+            @customer.Email
+        }
+    }
+                                    
+}
+else{
+    <p>@TempData["Response"]</p>
+}

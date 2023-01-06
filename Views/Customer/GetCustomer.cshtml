@@ -1,0 +1,20 @@
+﻿@using Retail_Banking_API.Models
+@using Retail_Banking_API.Controllers
+@model Customer
+
+@{
+    ViewData["Title"] = "GetCustomer";
+}
+
+<h1>GetCustomer</h1>
+
+@if(TempData["Response"] != null)
+{
+    <p>@TempData["Response"]</p>
+}
+
+<form asp-controller="Customer" asp-action="ShowCustomer">
+    <label name="cid" id="cid">Customer ID</label>
+    <input type="number" name="cid" id="cid" />
+    <button type="submit">Search</button>
+</form>
