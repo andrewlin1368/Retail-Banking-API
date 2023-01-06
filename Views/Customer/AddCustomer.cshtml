@@ -5,6 +5,10 @@
 
 <h1>AddCustomer</h1>
 
+@if(TempData["Response"]!=null){
+    <p>@TempData["Response"]</p>
+}
+
 <form asp-action="AddCustomer" method="post">
     <h4>Create a new account.</h4>
     <hr />

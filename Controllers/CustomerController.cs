@@ -36,8 +36,13 @@ namespace Retail_Banking_API.Controllers
         {
             if (ssn)
             {
-                //if db is down do check
-                return View(customerInterface.GetCustomerBySSN(ssnid).Item1);
+                (Customer?, string) ssndata = customerInterface.GetCustomerBySSN(ssnid);
+                if (ssndata.Item2.Contains("<!DOCTYPE html>"))
+                {
+                    TempData["Response"] = "Error @ my.retailbanking.com.";
+                    return RedirectToAction("GetCustomer");
+                }
+                return View(ssndata.Item1);
             }
             (Customer ?,string) data = customerInterface.GetCustomer(cid);
             if (data.Item1 == default)
@@ -59,11 +64,14 @@ namespace Retail_Banking_API.Controllers
         {
             if (ModelState.IsValid)
             {
-                // fail cases if customer exist or if db down
-                // display error messages
                 (Customer?, string) data = customerInterface.AddCustomer(customer);
                 if(data.Item1 != default)
                     return RedirectToAction("ShowCustomer", new {cid = 0, ssn = true, ssnid = data.Item1.SSNID});
+                else
+                {
+                    if(data.Item2.Contains("<!DOCTYPE html>")) TempData["Response"] = "Error @ my.retailbanking.com.";
+                    else TempData["Response"] = data.Item2;
+                }
                 return View(customer);
             }
             else
