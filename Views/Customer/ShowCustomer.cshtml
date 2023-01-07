@@ -2,18 +2,51 @@
 @model Customer
 @{
     ViewData["Title"] = "ShowCustomer";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h1>ShowCustomer</h1>
 
 @if (TempData["Response"] != null)
 {
-    <p>@TempData["Response"]</p>
+    <div class="alert alert-dark" role="alert">
+        <h4 class="alert-heading">@TempData["Response"]</h4>
+        <hr>
+        <p class="mb-0">To go back home @Html.ActionLink("Click me!","Index","Home")</p>
+    </div>
 }
+<section class="vh-75" style="background-color: #eee;">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-md-12 col-xl-4">
 
-@Model.CustomerID
-@Model.SSNID
-@Model.Name
-@Model.Age
-@Model.Address
-@Model.Email
+                <div class="card" style="border-radius: 15px;">
+                    <div class="card-body text-center">
+                        <div class="mt-3 mb-4">
+                            <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+                                 class="rounded-circle img-fluid" style="width: 100px;" />
+                        </div>
+                        <h4 class="mb-2">@Model.Name (@Model.Age)</h4>
+                        <p class="text-muted mb-2">
+                            SSN ID: @Model.SSNID
+                        </p>
+                        <p class="text-muted mb-2">
+                            Email: @Model.Email
+                        </p>
+                        <p class="text-muted mb-2">
+                            Address: @Model.Address
+                        </p>
+                        <div class="mb-4 pb-2">
+                            <button type="button" class="btn btn-outline-primary btn-floating">
+                                @Html.ActionLink("Update","UpdateCustomer","Customer",new {CustomerID = Model.CustomerID})
+                            </button>
+
+                            <button type="button" class="btn btn-outline-primary btn-floating">
+                                @Html.ActionLink("Delete","DeleteCustomer","Customer",new {CustomerID = Model.CustomerID})
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
